@@ -15,7 +15,7 @@ public class UserDataServiceImpl implements UserData {
 
     @Override
     public Optional<User> getUserData(String userName) {
-        return userRepository.findByUserName(userName);
+        return userRepository.findByEmail(userName);
     }
 
     @Override

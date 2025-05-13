@@ -14,7 +14,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.util.Optional;
 
 @RestController
-//@RequestMapping("/auth")
+@RequestMapping("/auth")
 public class AuthenticationController {
 
     @Autowired
@@ -23,16 +23,17 @@ public class AuthenticationController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @GetMapping("/login")
-    public ResponseEntity<String> verify(@RequestBody AuthRequest request) {
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> verify(@RequestBody AuthRequest request) {
        Authentication authentication =  authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
        System.out.println(request);
        if(authentication.isAuthenticated()) {
-           return ResponseEntity.ok(jwtUtil.generateToken(request.getUserName()));
+
+           return ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(request.getEmail())));
        }
-       return ResponseEntity.ok("Unauthorized");
+       return ResponseEntity.ok(new AuthResponse("Error"));
 //        String token = jwtUtil.generateToken(request.getUserName());
 //        return ResponseEntity.ok(new AuthResponse(token));
     }

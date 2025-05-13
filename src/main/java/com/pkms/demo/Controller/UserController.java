@@ -17,9 +17,10 @@ public class UserController {
     @Autowired
     UserDataServiceImpl userDataServiceImpl;
 
-    @PostMapping("/user")
+    @PostMapping("/save-user")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         user.setPassword(new BCryptPasswordEncoder(12).encode(user.getPassword()));
+        userDataServiceImpl.saveUserData(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 }

@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.web.WebProperties;
 @Table(name = "User_Data")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userName;
     private String password;
@@ -39,5 +39,10 @@ public class User {
     public String getPassword() {
         return this.password;
     }
+    public String getEmail() {
+        return this.email;
+    }
+
+
 
 }
